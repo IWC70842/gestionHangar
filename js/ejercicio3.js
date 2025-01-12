@@ -5,7 +5,7 @@
 * @description  Ejercicio 3 Unidad Temática 4 Jerarquíuas Objetos Aeronaves
 */
 
-document.getElementById("tarjetas").style.display="none";
+document.getElementById("tarjetas").style.display="block";
 
 //Prototipo de aeronave
 function Aeronave(id, combustible) {
@@ -36,12 +36,29 @@ Aeronave.prototype.aterrizar = function () {
   console.log(`La aeronave ${this.id} ha aterrizado.`);
 }
 
+Aeronave.prototype.info=function(){
+  return (`
+    ID Aeronave: ${this.id}\n
+    Porcentaje de combustible: ${this.combustible}%\n
+    Estado del tren de aterrizaje: ${this.TrenAterrizaje.bajado ? `bajado` : `subido`}\n
+    Puntal delantero: ${this.TrenAterrizaje.frontal.desplegado ? `despleago` : `replegado`}
+    Estado presión de las ruedas: ${this.TrenAterrizaje.frontal.ruedaIzquierda.presionOptima() ? `Rueda Izq OK`:`Rueda Izq Fallo`}
+    Estado presión de las ruedas: ${this.TrenAterrizaje.frontal.ruedaDerecha.presionOptima() ? `Rueda Drch OK`:`Rueda Drch Fallo`}
+    Puntal izquierdo: ${this.TrenAterrizaje.izquierdo.desplegado ? `despleago` : `replegado`}
+    Estado presión de las ruedas: ${this.TrenAterrizaje.izquierdo.ruedaIzquierda.presionOptima() ? `Rueda Izq OK`:`Rueda Izq Fallo`}
+    Estado presión de las ruedas: ${this.TrenAterrizaje.izquierdo.ruedaDerecha.presionOptima() ? `Rueda Drch OK`:`Rueda Drch Fallo`}
+    Puntal derecho: ${this.TrenAterrizaje.derecho.desplegado ? `despleago` : `replegado`}
+    Estado presión de las ruedas: ${this.TrenAterrizaje.derecho.ruedaIzquierda.presionOptima() ? `Rueda Izq OK`:`Rueda Izq Fallo`}
+    Estado presión de las ruedas: ${this.TrenAterrizaje.derecho.ruedaDerecha.presionOptima() ? `Rueda Drch OK`:`Rueda Drch Fallo`}    
+    `)
+}
+
 //Prototipo de Tren de Aterrizaje
 function TrenAterrizaje() {
   this.frontal = new Puntal();
   this.izquierdo = new Puntal();
   this.derecho = new Puntal();
-  this.bajado = false;
+  this.bajado = true;
 }
 TrenAterrizaje.prototype.subir = function () {
   this.bajado=false;
@@ -74,7 +91,7 @@ TrenAterrizaje.prototype.comprobarPresionRuedas = function () {
 function Puntal() {
   this.ruedaIzquierda = new Rueda(20000,18500);
   this.ruedaDerecha = new Rueda(20000,18500);
-  this.desplegado = false;
+  this.desplegado = true;
 }
 
 Puntal.prototype.desplegar = function () {
@@ -121,9 +138,13 @@ Hangar.prototype.añadeAeronave = function (aeronave) {
   this.aeronaves.push(aeronave);
 }
 
+//Funcion para listar todas las aeronaves en el Hangar
 Hangar.prototype.listarAeronaves = function () {
-  this.aeronaves.forEach(aeronave => console.log("info de cada aeronave"));
+  alert("Se ha generado en la consola listado de aeronaves.")
+  console.log("Aeronaves en el Hangar:\n");
+  this.aeronaves.forEach(aeronave => console.log(`ID Aeronave: ${aeronave.id}, Combustible: ${aeronave.combustible}%`));
 }
+
 
 function iniciarSimulacion(){
   const aeronave1=obtenerDatosAeronave(1);
@@ -134,15 +155,16 @@ function iniciarSimulacion(){
   hangar.añadeAeronave(aeronave2);
 
   document.getElementById("tarjetas").style.display="block";
-
-
+  document.getElementById("titulo1").innerText=`Aeronave 1: ${aeronave1.id}`;
+  document.getElementById("titulo2").innerText=`Aeronave 2: ${aeronave2.id}`;
+  document.getElementById("info1").innerText=aeronave1.info();
+  document.getElementById("info2").innerText=aeronave2.info();
   
+  hangar.listarAeronaves();
 
 }
 
-function obtenerDatosAeronave(numeroNave){
-  
-  
+function obtenerDatosAeronave(numeroNave){   
   let idAeronave=prompt(`Introduce ID para la Aeronave ${numeroNave}:`);
   let combustible=prompt("Introduce porcentaje del deposito de combusitble: (0-100)");
   combustible = Number(combustible);
@@ -153,7 +175,4 @@ function obtenerDatosAeronave(numeroNave){
     alert("Valor de combustible no válido");
     obtenerDatosAeronave(numeroNave);
   }
-  
-  
-
 }

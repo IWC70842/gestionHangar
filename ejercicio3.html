@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +7,6 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <title>Ejercicio 3 Unidad Temática 4</title>
 </head>
-
 <body>
 
   <div class="container mt-5 text-center">
@@ -19,28 +17,33 @@
   <div class="card-group m-5" style="margin: 0 auto;" id="tarjetas">
     <div class="row row-cols-1 row-cols-md-2 g-4">
       <div class="col">
-        <div class="card">
-          <img src="img/aeronave1.webp" class="card-img-top" alt="Aeronave1">
+        <div class="card d-flex flex-row">
+          <img src="img/aeronave1.webp" class="card-img-left" alt="Aeronave1" style="width: 300px; height: 300px; object-fit: cover;">          
           <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-              content. This content is a little bit longer.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <img src="img/aeronave2.webp" class="card-img-top" alt="aeronave2">
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-              content. This content is a little bit longer.</p>
-          </div>
-        </div>
-      </div>
-    </div>
+            <h5 class="card-title" id="titulo1"></h5>
+            <p class="card-text" id="info1"></p>
+          </div>          
+        </div>        
+      </div>     
 
+      <div class="col">
+        <div class="card d-flex flex-row">
+          <img src="img/aeronave2.webp" class="card-img-left" alt="Aeronave2" style="width: 300px; height: 300px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title" id="titulo2"></h5>
+            <p class="card-text" id="info2"></p>
+          </div>
+        </div>
+      </div>
+    </div>   
   </div>
+  <div class="container mt-5 text-center" id="listado">
+    <h3>Listado de aeronaves</h3>
+    <p></p>
+  </div>
+ 
+  
+  
 
 
 
