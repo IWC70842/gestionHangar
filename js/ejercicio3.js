@@ -6,6 +6,7 @@
 */
 
 document.getElementById("tarjetas").style.display="block";
+document.getElementById("listado").style.display="none";
 
 //Prototipo de aeronave
 function Aeronave(id, combustible) {
@@ -139,10 +140,10 @@ Hangar.prototype.añadeAeronave = function (aeronave) {
 }
 
 //Funcion para listar todas las aeronaves en el Hangar
-Hangar.prototype.listarAeronaves = function () {
-  alert("Se ha generado en la consola listado de aeronaves.")
-  console.log("Aeronaves en el Hangar:\n");
-  this.aeronaves.forEach(aeronave => console.log(`ID Aeronave: ${aeronave.id}, Combustible: ${aeronave.combustible}%`));
+Hangar.prototype.listarAeronaves = function () { 
+  let listado ="";
+  listado = this.aeronaves.map(aeronave => `ID Aeronave: ${aeronave.id} --- Combustible: ${aeronave.combustible}%`).join('\n');
+  document.querySelector("#listado p").innerText=listado ;
 }
 
 
@@ -155,6 +156,7 @@ function iniciarSimulacion(){
   hangar.añadeAeronave(aeronave2);
 
   document.getElementById("tarjetas").style.display="block";
+  document.getElementById("listado").style.display="block";
   document.getElementById("titulo1").innerText=`Aeronave 1: ${aeronave1.id}`;
   document.getElementById("titulo2").innerText=`Aeronave 2: ${aeronave2.id}`;
   document.getElementById("info1").innerText=aeronave1.info();
@@ -175,4 +177,9 @@ function obtenerDatosAeronave(numeroNave){
     alert("Valor de combustible no válido");
     obtenerDatosAeronave(numeroNave);
   }
+}
+
+function actualizainfo(){
+  document.getElementById("info1").innerText=aeronave1.info();
+  document.getElementById("info2").innerText=aeronave2.info();
 }
