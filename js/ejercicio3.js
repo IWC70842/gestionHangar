@@ -5,6 +5,8 @@
 * @description  Ejercicio 3 Unidad Temática 4 Jerarquíuas Objetos Aeronaves
 */
 
+document.getElementById("tarjetas").style.display="none";
+
 //Prototipo de aeronave
 function Aeronave(id, combustible) {
   //suponemos la cantidad de combustible en porcentaje de depósito lleno. 
@@ -15,12 +17,11 @@ function Aeronave(id, combustible) {
   this.id = id;
   this.combustible = combustible;
   this.TrenAterrizaje = new TrenAterrizaje();
-
 }
 
 Aeronave.prototype.despegar = function () {
-  //comprobar presion en todas las ruedas y combustible
-  //Tomamos que si no tiene la mitad del deposito al menos no puede despegar
+  //Comprobamos combustible y presión de todas las ruedas
+  //Para despegar comprobamos que al menos tenga la mitad del tanque de combustible
   if (this.combustible > 50 && this.TrenAterrizaje.comprobarPresionRuedas()) {
     this.TrenAterrizaje.subir();
     console.log(`La aeronave ${this.id} ha despegado.`);
@@ -33,7 +34,6 @@ Aeronave.prototype.despegar = function () {
 Aeronave.prototype.aterrizar = function () {
   this.TrenAterrizaje.bajar();
   console.log(`La aeronave ${this.id} ha aterrizado.`);
-
 }
 
 //Prototipo de Tren de Aterrizaje
@@ -72,8 +72,8 @@ TrenAterrizaje.prototype.comprobarPresionRuedas = function () {
 
 //Prototipo Puntal
 function Puntal() {
-  this.ruedaIzquierda = ruedaIzquierda;
-  this.ruedaDerecha = ruedaDerecha;
+  this.ruedaIzquierda = new Rueda(20000,18500);
+  this.ruedaDerecha = new Rueda(20000,18500);
   this.desplegado = false;
 }
 
@@ -89,15 +89,18 @@ Puntal.prototype.replegar = function () {
 
 //Prototipo Rueda
 function Rueda(presionMaxima, presion) {
-  if (presionMaxima <= 0 || presionMaxima >= 27000) {
+  if (presionMaxima <= 0 || presionMaxima >= 20700) {
+    alert("Presión máxima fuera del rango admisible 0-27000 mb.");
+    return;
 
   }
-  if (presion <= 0 || presion >= 27000) {
+  if (presion <= 0 || presion >= 20700) {
+    alert("Presión no válida. Debe ser superior a 0 e inferior a 20700");
+    return;
 
   }
   this.presionMaxima = presionMaxima;
   this.presion = presion;
-
 }
 
 Rueda.prototype.obtenerPresion = function () {
@@ -117,6 +120,40 @@ function Hangar() {
 Hangar.prototype.añadeAeronave = function (aeronave) {
   this.aeronaves.push(aeronave);
 }
+
 Hangar.prototype.listarAeronaves = function () {
   this.aeronaves.forEach(aeronave => console.log("info de cada aeronave"));
+}
+
+function iniciarSimulacion(){
+  const aeronave1=obtenerDatosAeronave(1);
+  const aeronave2=obtenerDatosAeronave(2);
+
+  const hangar= new Hangar();
+  hangar.añadeAeronave(aeronave1);
+  hangar.añadeAeronave(aeronave2);
+
+  document.getElementById("tarjetas").style.display="block";
+
+
+  
+
+}
+
+function obtenerDatosAeronave(numeroNave){
+  
+  
+  let idAeronave=prompt(`Introduce ID para la Aeronave ${numeroNave}:`);
+  let combustible=prompt("Introduce porcentaje del deposito de combusitble: (0-100)");
+  combustible = Number(combustible);
+  if(0<combustible&&combustible<100){
+    alert(`Aeronave ${numeroNave} creada correctamente:\nID Aeronave: ${idAeronave}\nCombustible: ${combustible}%`);
+    return new Aeronave(idAeronave,combustible);
+  }else{
+    alert("Valor de combustible no válido");
+    obtenerDatosAeronave(numeroNave);
+  }
+  
+  
+
 }
